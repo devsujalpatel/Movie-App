@@ -76,8 +76,6 @@ function App() {
 
       if (movies) {
         setTrendingMovies(movies);
-        console.log(movies);
-
       }
     } catch (error) {
       console.error('Error fetching trending movies:', error);
