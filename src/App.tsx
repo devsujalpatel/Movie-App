@@ -16,7 +16,7 @@ interface Movie {
 
 interface TrendMovie {
   $id: string
-   title: string;
+  title: string;
   poster_url: string
 }
 
@@ -33,11 +33,13 @@ const API_OPTIONS = {
 };
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [moviesList, setMovieList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [moviesList, setMovieList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  
   const [trendingMovies, setTrendingMovies] = useState([]);
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 1000, [searchTerm])
@@ -75,7 +77,7 @@ function App() {
       if (movies) {
         setTrendingMovies(movies);
         console.log(movies);
-        
+
       }
     } catch (error) {
       console.error('Error fetching trending movies:', error);
@@ -106,29 +108,29 @@ function App() {
             <h2>Trending Movies</h2>
             <ul>
               {trendingMovies.map((movie: TrendMovie, index) => (
-                <li key={ movie.$id }>
-                <p>{index + 1}</p>
-                <img src={movie.poster_url} alt={movie.title} />
+                <li key={movie.$id}>
+                  <p>{index + 1}</p>
+                  <img src={movie.poster_url} alt={movie.title} />
                 </li>
               ))}
-          </ul>
+            </ul>
           </section>
         )}
-      <section className="all-movies">
-        <h2>All Movies</h2>
-        {isLoading ? (
-          <Spinner />
-        ) : errorMessage ? (
-          <p className="text-red-500">{errorMessage}</p>
-        ) : (
-          <ul>
-            {moviesList.map((movie: Movie) => (
-              <MovieCard key={movie.id} id={movie.id} title={movie.title} vote_average={movie.vote_average} poster_path={movie.poster_path} release_date={movie.release_date} original_language={movie.original_language} />
-            ))}
-          </ul>
-        )}
-      </section>
-    </div>
+        <section className="all-movies">
+          <h2>All Movies</h2>
+          {isLoading ? (
+            <Spinner />
+          ) : errorMessage ? (
+            <p className="text-red-500">{errorMessage}</p>
+          ) : (
+            <ul>
+              {moviesList.map((movie: Movie) => (
+                <MovieCard key={movie.id} id={movie.id} title={movie.title} vote_average={movie.vote_average} poster_path={movie.poster_path} release_date={movie.release_date} original_language={movie.original_language} />
+              ))}
+            </ul>
+          )}
+        </section>
+      </div>
     </main >
   );
 }
