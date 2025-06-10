@@ -4,21 +4,25 @@ A sleek and responsive movie search application powered by **Appwrite** for back
 
 🔗 **Live Demo**: [cinesearchhmovies.netlify.app](https://cinesearchhmovies.netlify.app/)
 
+# Image
+
+![Home Page](./public/movieapp.png)
+
 ## ✨ Features
 
-- 🔍 **Search Movies** by title in real-time  
-- 🎥 **Display Movie Details** like title, year, rating, and posters  
-- ☁️ **Appwrite Integration** for secure backend operations  
-- 📱 **Responsive Design** for all screen sizes  
-- ⚡ **Fast and Clean UI** built with modern web technologies  
+- 🔍 **Search Movies** by title in real-time
+- 🎥 **Display Movie Details** like title, year, rating, and posters
+- ☁️ **Appwrite Integration** for secure backend operations
+- 📱 **Responsive Design** for all screen sizes
+- ⚡ **Fast and Clean UI** built with modern web technologies
 
 ## 🛠️ Built With
 
-- **React.js** – UI library  
-- **Appwrite** – Backend-as-a-service for data storage & API  
-- **Tailwind CSS** – Utility-first CSS framework for styling  
-- **TMDB API** *(assumed)* – To fetch movie data  
-- **Vite** – Lightning-fast dev server and build tool  
+- **React.js** – UI library
+- **Appwrite** – Backend-as-a-service for data storage & API
+- **Tailwind CSS** – Utility-first CSS framework for styling
+- **TMDB API** _(assumed)_ – To fetch movie data
+- **Vite** – Lightning-fast dev server and build tool
 
 ## 🧱 Project Structure
 
@@ -38,6 +42,7 @@ Movie-App/
 ├── package.json
 └── README.md
 ```
+
 bash
 
 ## ⚙️ Getting Started
@@ -48,12 +53,15 @@ bash
 git clone https://github.com/devsujalpatel/Movie-App.git
 cd Movie-App
 ```
+
 2. Install Dependencies
+
 ```bash
 npm install
 ```
+
 3. Set Up Environment Variables
-Create a .env file in the root directory and add your Appwrite credentials:
+   Create a .env file in the root directory and add your Appwrite credentials:
 
 env
 Copy
@@ -65,11 +73,11 @@ VITE_APPWRITE_COLLECTION_ID=your_collection_id
 Replace with your actual Appwrite project values.
 
 4. Start the Development Server
-bash
-Copy
-Edit
-npm run dev
-Visit http://localhost:5173 in your browser.
+   bash
+   Copy
+   Edit
+   npm run dev
+   Visit http://localhost:5173 in your browser.
 
 🚀 Deployment
 This app is easily deployable to Netlify, Vercel, or any static hosting platform. The current live version is hosted on Netlify.
