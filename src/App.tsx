@@ -2,6 +2,7 @@ import { useState, useEffect, use } from "react";
 import Search from "./components/Search";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
+import { updateSearchCount } from './appwrite.ts'
 import { useDebounce } from "react-use";
 
 interface Movie {
@@ -49,6 +50,7 @@ function App() {
         throw new Error("No movies found");
       }
       setMovieList(data.results);
+      updateSearchCount()
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage("Error fetching movies. Please try again later.");
