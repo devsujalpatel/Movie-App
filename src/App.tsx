@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Search from "./components/Search";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
-import { updateSearchCount } from './appwrite.ts'
+import { getTrendingMovies, updateSearchCount } from './appwrite.ts'
 import { useDebounce } from "react-use";
 
 interface Movie {
@@ -12,6 +12,12 @@ interface Movie {
   poster_path: string;
   release_date: string;
   original_language: string;
+}
+
+interface TrendMovie {
+  $id: string
+   title: string;
+  poster_url: string
 }
 
 
@@ -32,6 +38,7 @@ function App() {
   const [moviesList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [trendingMovies, setTrendingMovies] = useState([]);
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 1000, [searchTerm])
 
@@ -61,9 +68,27 @@ function App() {
     }
   };
 
+  const loadTrendingMovies = async () => {
+    try {
+      const movies: any = await getTrendingMovies();
+
+      if (movies) {
+        setTrendingMovies(movies);
+        console.log(movies);
+        
+      }
+    } catch (error) {
+      console.error('Error fetching trending movies:', error);
+    }
+  }
+
   useEffect(() => {
     fetchMovies(debouncedSearchTerm);
   }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    loadTrendingMovies();
+  }, [])
   return (
     <main>
       <div className="pattern" />
@@ -76,22 +101,35 @@ function App() {
           </h1>
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>
-        <section className="all-movies">
-          <h2 className="mt-[40px]">All Movies</h2>
-          {isLoading ? (
-            <Spinner />
-          ) : errorMessage ? (
-            <p className="text-red-500">{errorMessage}</p>
-          ) : (
+        {trendingMovies.length > 0 && (
+          <section className="trending">
+            <h2>Trending Movies</h2>
             <ul>
-              {moviesList.map((movie: Movie) => (
-                <MovieCard key={movie.id} id={movie.id} title={movie.title} vote_average={movie.vote_average} poster_path={movie.poster_path} release_date={movie.release_date} original_language={movie.original_language} />
+              {trendingMovies.map((movie: TrendMovie, index) => (
+                <li key={ movie.$id }>
+                <p>{index + 1}</p>
+                <img src={movie.poster_url} alt={movie.title} />
+                </li>
               ))}
-            </ul>
-          )}
-        </section>
-      </div>
-    </main>
+          </ul>
+          </section>
+        )}
+      <section className="all-movies">
+        <h2>All Movies</h2>
+        {isLoading ? (
+          <Spinner />
+        ) : errorMessage ? (
+          <p className="text-red-500">{errorMessage}</p>
+        ) : (
+          <ul>
+            {moviesList.map((movie: Movie) => (
+              <MovieCard key={movie.id} id={movie.id} title={movie.title} vote_average={movie.vote_average} poster_path={movie.poster_path} release_date={movie.release_date} original_language={movie.original_language} />
+            ))}
+          </ul>
+        )}
+      </section>
+    </div>
+    </main >
   );
 }
 
